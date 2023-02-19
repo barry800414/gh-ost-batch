@@ -1,0 +1,7 @@
+[mysqld]
+server-id = 2
+
+# name of bin log
+log-bin=follower-bin
+
+log_slave_updates=ON

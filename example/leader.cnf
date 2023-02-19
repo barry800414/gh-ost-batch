@@ -1,0 +1,14 @@
+[mysqld]
+# must not 0
+server-id = 1
+
+# name of bin log
+log-bin=leader-bin
+
+# not to list the changes in "mysql" db (default one)
+binlog-ignore-db=mysql
+
+# binlog-do-db
+
+# same as AIQUA MySQL Master setting
+binlog_format=mixed

@@ -1,0 +1,59 @@
+version: '3.7'
+services:
+  leader:
+    container_name: leader
+    image: mysql:5.7.35
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: '0000'
+      MYSQL_ROOT_PASSWORD: '0000'
+      MYSQL_DATABASE: 'demo'
+    volumes:
+      - type: bind
+        source: ./leader.cnf
+        target: /etc/mysql/conf.d/mysql.cnf
+      - type: bind
+        source: ./leader.init.sql
+        target: /docker-entrypoint-initdb.d/init.sql
+      - type: bind
+        source: ./leader-db
+        target: /var/lib/mysql
+    networks:
+      mysql-cluster:
+        aliases:
+          - leader.io
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+
+  follower:
+    container_name: follower
+    image: mysql:5.7.35
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: '0000'
+      MYSQL_ROOT_PASSWORD: '0000'
+      MYSQL_DATABASE: 'demo'
+    volumes:
+      - type: bind
+        source: ./follower.cnf
+        target: /etc/mysql/conf.d/mysql.cnf
+      - type: bind
+        source: ./follower.init.sql
+        target: /docker-entrypoint-initdb.d/init.sql
+      - type: bind
+        source: ./follower-db
+        target: /var/lib/mysql
+    networks:
+      mysql-cluster:
+        aliases:
+          - follower.io
+    ports:
+      - "3307:3306"
+    expose:
+      - 3307
+
+networks:
+  mysql-cluster:
+    name: mysql-cluster

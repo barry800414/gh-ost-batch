@@ -1,0 +1,9 @@
+
+GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO repl@'%' IDENTIFIED BY 'repl';
+
+CREATE TABLE `user` (
+  `id` int(12) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `username` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
